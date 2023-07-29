@@ -1,0 +1,17 @@
+The output sequence of the provided code will be as follows:
+===========================================================
+console.log(1);: This line of code logs the number 1 to the console immediately when it is encountered during the script execution. So, the output will be 1.
+
+setTimeout(printNumber, 0, 2);: This line of code schedules the execution of the printNumber function with the argument 2 after 0 milliseconds. The setTimeout function does not guarantee that the callback will execute exactly after the specified delay. Instead, it adds the callback to the event loop, and its actual execution time will depend on the event loop's current state. Since the delay is 0 milliseconds, the callback is added to the event loop immediately after the setTimeout call. However, it will be executed after the current synchronous code execution is complete. So, the output at this point remains 1.
+
+setTimeout(printNumber, 100, 3);: This line of code schedules the execution of the printNumber function with the argument 3 after 100 milliseconds (0.1 seconds). Again, the setTimeout function will add the callback to the event loop, and its execution will be delayed by approximately 100 milliseconds. So, the output remains 1.
+
+console.log(4);: This line of code logs the number 4 to the console immediately after console.log(1);. So, the output becomes 1 4.
+
+Now, after the synchronous code execution is complete, the event loop starts processing the callbacks that were added through setTimeout.
+
+The first callback added through setTimeout(printNumber, 0, 2); is executed, which logs 2 to the console. So, the output becomes 1 4 2.
+
+After approximately 100 milliseconds from the start of the event loop, the second callback added through setTimeout(printNumber, 100, 3); is executed, which logs 3 to the console. So, the final output becomes 1 4 2 3.
+
+In summary, the output sequence will be 1 4 2 3. The reason for this order is that the setTimeout with 0ms delay schedules the callback to be executed after the current synchronous code execution is completed, while the setTimeout with 100ms delay schedules the callback to be executed approximately 100 milliseconds after the event loop starts.
