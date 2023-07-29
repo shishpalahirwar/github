@@ -1,0 +1,33 @@
+=>>The given code snippet contains a loop that iterates from 0 to 4 (i.e., five iterations) using the variable i. Within each iteration, there is a setTimeout function that schedules the execution of an arrow function after a delay of 100 milliseconds. The arrow function then logs the value of the variable i to the console.
+
+Now, let's understand the output and the reason behind it:
+
+Output:
+======
+5
+5
+5
+5
+5
+Explanation:
+===========
+
+When the setTimeout function is used within the loop, it schedules the execution of the arrow function asynchronously.
+The loop runs through all iterations quickly, and by the time the arrow functions are executed after the specified delay, the value of i is already equal to 5 because the loop has completed.
+
+In JavaScript, closures capture references to variables, not the variable values themselves.
+So, all the arrow functions scheduled in the loop share the same reference to the variable i. 
+When these arrow functions are executed, they access the shared reference to i, and at that moment, the value of i is 5 (the loop termination condition). 
+Hence, each arrow function logs the value of i, which is 5.
+
+To achieve the desired behavior of logging values from 0 to 4, you can create a separate closure for each iteration by using an IIFE (Immediately Invoked Function Expression):
+
+javascript
+==========
+for (var i = 0; i < 5; i++) {
+  (function (num) {
+    setTimeout(() => console.log(num), 100);
+  })(i);
+}
+This way, each iteration creates its own closure with its specific value of i, 
+and when the arrow functions are executed, they log the correct values 0 to 4 respectively.
